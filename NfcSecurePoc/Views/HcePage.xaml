@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NfcSecurePoc.ViewModels"
+             xmlns:local="clr-namespace:NfcSecurePoc"
+             x:Class="NfcSecurePoc.Views.HcePage"
+             x:DataType="vm:HceViewModel"
+             Title="HCE (Card)">
+
+    <ContentPage.Resources>
+        <local:BoolToStringConverter x:Key="HceButtonTextConverter"
+                                     TrueText="Stop HCE"
+                                     FalseText="Start HCE" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16" RowSpacing="12">
+
+        <!-- Status -->
+        <Frame Grid.Row="0" Padding="12" BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#1E1E1E}">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Card Emulation" FontAttributes="Bold" FontSize="18" />
+                <Label Text="{Binding StatusText}" FontSize="14" TextColor="Gray" />
+                <Label Text="HCE not supported on iOS"
+                       IsVisible="{Binding IsSupported, Converter={StaticResource InvertBoolConverter}}"
+                       TextColor="OrangeRed" FontSize="12" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Payload -->
+        <VerticalStackLayout Grid.Row="1" Spacing="4">
+            <Label Text="Payload to serve:" FontSize="14" />
+            <Entry Text="{Binding Payload}" Placeholder="Enter payload..." />
+        </VerticalStackLayout>
+
+        <!-- Toggle Button -->
+        <Button Grid.Row="2"
+                Text="{Binding IsActive, Converter={StaticResource HceButtonTextConverter}}"
+                Command="{Binding ToggleCommand}"
+                BackgroundColor="{Binding IsActive, Converter={StaticResource ActiveColorConverter}}"
+                TextColor="White"
+                FontAttributes="Bold"
+                HeightRequest="50" />
+
+        <!-- Logs -->
+        <Frame Grid.Row="3" Padding="8" BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#121212}">
+            <ScrollView>
+                <Label Text="{Binding Logs}"
+                       FontFamily="Consolas"
+                       FontSize="11"
+                       LineBreakMode="WordWrap" />
+            </ScrollView>
+        </Frame>
+
+    </Grid>
+</ContentPage>
