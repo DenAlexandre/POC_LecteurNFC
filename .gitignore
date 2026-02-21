@@ -1,2 +1,6 @@
 /NfcSecurePoc.Tests/obj
 /NfcSecurePoc.Tests/bin
+/NfcSecurePoc/obj
+/NfcSecurePoc/bin
+/.vs
+/NfcSecurePo/.vs
